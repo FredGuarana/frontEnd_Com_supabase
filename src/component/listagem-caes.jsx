@@ -11,6 +11,8 @@ import {
   AlertIcon,
 } from '@chakra-ui/react';
 
+
+
 function ListagemCaes() {
   const [caes, setCaes] = useState([]);
   const [error, setError] = useState(null);
@@ -58,7 +60,7 @@ function ListagemCaes() {
   }, []);
 
   return (
-    <VStack spacing={4}>
+    <VStack spacing={4} p='10'>
       {error && (
         <Alert status="error">
           <AlertIcon />

@@ -7,12 +7,15 @@ import {
   VStack,
   Alert,
   AlertIcon,
+  Toast,
+  ToastOptionProvider,
 } from '@chakra-ui/react';
+import supabase from '../config/auth/supabaseClient';
 
 function CadastroCao() {
   const [nomeCao, setNomeCao] = useState('');
   const [tutor, setTutor] = useState('');
-  const [dataNascimento, setDataNascimento] = useState('');
+  const [data_nasc, setDataNascimento] = useState('');
   const [raca, setRaca] = useState('');
   const [peso, setPeso] = useState('');
   const [error, setError] = useState(null);
@@ -21,23 +24,24 @@ function CadastroCao() {
     setError(null);
 
     try {
-      // Aqui você pode usar o Supabase ou outra solução de armazenamento de dados
-      // para salvar as informações do cão no banco de dados.
-      // Por exemplo:
-      // const { data, error } = await supabase
-      //   .from('caes')
-      //   .insert([{ nomeCao, tutor, dataNascimento, raca, peso }]);
-
-      // Lide com o resultado da inserção conforme necessário.
-
+        const { error } = await supabase.from('cadastroCaes').insert([{ nomeCao, tutor, dataNascimento: data_nasc, raca, peso }]);
+      if (error) {
+        throw error;
+      }
     } catch (error) {
+      Toast({
+        ...ToastOptionProvider,
+        title: 'Erro ao cadastrar cão.',
+        description: error.message,
+        status: 'error',
+      });
       console.error('Erro ao cadastrar cão:', error.message);
       setError('Erro ao cadastrar cão: ' + error.message);
     }
   };
 
   return (
-    <VStack spacing={4}>
+    <VStack spacing={4}p='10'>
       {error && (
         <Alert status="error">
           <AlertIcon />
@@ -64,7 +68,7 @@ function CadastroCao() {
         <FormLabel>Data de Nascimento</FormLabel>
         <Input
           type="date"
-          value={dataNascimento}
+          value={data_nasc}
           onChange={(e) => setDataNascimento(e.target.value)}
         />
       </FormControl>

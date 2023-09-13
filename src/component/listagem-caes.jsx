@@ -10,6 +10,7 @@ import {
   Alert,
   AlertIcon,
 } from '@chakra-ui/react';
+import supabase from '../config/auth/supabaseClient';
 
 
 
@@ -66,6 +67,6 @@ function ListagemCaes() {
       </Table>
     </VStack>
   );
-}
+})}
 
 export default ListagemCaes;

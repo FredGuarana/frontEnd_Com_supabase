@@ -9,11 +9,12 @@ import {
   AlertIcon,
   Toast,
   ToastOptionProvider,
+  
 } from '@chakra-ui/react';
 import supabase from '../config/auth/supabaseClient';
 
 function CadastroCao() {
-  const [nomeCao, setNomeCao] = useState('');
+  const [nome_cao, setNomeCao] = useState('');
   const [tutor, setTutor] = useState('');
   const [data_nasc, setDataNascimento] = useState('');
   const [raca, setRaca] = useState('');
@@ -24,10 +25,11 @@ function CadastroCao() {
     setError(null);
 
     try {
-        const { error } = await supabase.from('cadastroCaes').insert([{ nomeCao, tutor, dataNascimento: data_nasc, raca, peso }]);
+        const { error } = await supabase.from('cadastroCaes').insert([{ nome_cao: nome_cao, tutor, data_nasc, raca, peso }]);
       if (error) {
         throw error;
       }
+      
     } catch (error) {
       Toast({
         ...ToastOptionProvider,
@@ -52,7 +54,7 @@ function CadastroCao() {
         <FormLabel>Nome do Cão</FormLabel>
         <Input
           type="text"
-          value={nomeCao}
+          value={nome_cao}
           onChange={(e) => setNomeCao(e.target.value)}
         />
       </FormControl>
